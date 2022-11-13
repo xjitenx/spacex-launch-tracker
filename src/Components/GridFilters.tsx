@@ -43,7 +43,7 @@ const GridFilters: React.FC<GridFilterProps> = ({
     >
       <Stack direction='row' alignItems='center'>
         <CalendarTodayOutlinedIcon
-          sx={{ height: 16, width: 16, marginRight: '10px', marginTop: '-6px' }}
+          sx={{ height: 16, width: 16, marginRight: '10px', marginTop: '-5px' }}
         />
         <FormControl variant='standard' sx={{ width: 200 }}>
           <Select
@@ -51,6 +51,7 @@ const GridFilters: React.FC<GridFilterProps> = ({
             onChange={handlePeriodFilterChange}
             disableUnderline
             IconComponent={KeyboardArrowDownIcon}
+            sx={{ fontWeight: 500 }}
           >
             <MenuItem value='All'>All</MenuItem>
             <MenuItem value='6Month'>Past 6 Month</MenuItem>
@@ -62,7 +63,7 @@ const GridFilters: React.FC<GridFilterProps> = ({
       </Stack>
       <Stack direction='row' alignItems='center'>
         <FilterAltOutlinedIcon
-          sx={{ height: 20, width: 20, marginRight: '10px', marginTop: '-6px' }}
+          sx={{ height: 20, width: 20, marginRight: '10px', marginTop: '-5px' }}
         />
         <FormControl variant='standard' sx={{ minWidth: 200 }}>
           <Select
@@ -70,6 +71,7 @@ const GridFilters: React.FC<GridFilterProps> = ({
             onChange={handleStatusFilterChange}
             disableUnderline
             IconComponent={KeyboardArrowDownIcon}
+            sx={{ fontWeight: 500 }}
           >
             <MenuItem value='All'>All</MenuItem>
             <MenuItem value='Failed'>Failed</MenuItem>

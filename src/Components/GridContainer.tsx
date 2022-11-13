@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Stack } from '@mui/material';
 import { Launch, Launches } from '../Types/Lunches';
 import GridFilters from './GridFilters';
-import Grid from './Grid';
+import LaunchGrid from './LaunchGrid';
 
 const GridContainer: React.FC = () => {
   const [launches, setLaunches] = useState<Launches>([]);
@@ -44,7 +44,7 @@ const GridContainer: React.FC = () => {
         setPeriodFilter={setPeriodFilter}
         setStatusFilter={setStatusFilter}
       />
-      <Grid rows={filteredLaunches} />
+      <LaunchGrid rows={filteredLaunches} />
     </Stack>
   );
 };

@@ -18,6 +18,22 @@ body {
   width: 100%;
 }
 
+.mt-1 {
+  margin-top: 10px;
+}
+
+.mt-2 {
+  margin-top: 20px;
+}
+
+.mr-1 {
+  margin-right: 10px;
+}
+
+.mr-2 {
+  margin-right: 20px;
+}
+
 .d-flex {
   display: flex !important;
 }

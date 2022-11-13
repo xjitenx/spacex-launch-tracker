@@ -23,6 +23,12 @@ type LaunchSite = {
   site_name_long: String;
 };
 
+type Links = {
+  article_link: string;
+  wikipedia: string;
+  video_link: string;
+}
+
 export type Launch = {
   flight_number: Number;
   mission_name: String;
@@ -31,6 +37,7 @@ export type Launch = {
   launch_site: LaunchSite;
   launch_success: Boolean;
   details: String;
+  links: Links;
 };
 
 export type Launches = Array<Launch>;
