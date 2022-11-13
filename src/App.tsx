@@ -5,7 +5,13 @@ import TopBar from './Components/TopBar';
 
 const App: React.FC = () => {
   return (
-    <Stack>
+    <Stack
+      height='100vh'
+      width='100vw'
+      direction='column'
+      justifyContent='center'
+      alignItems='center'
+    >
       <TopBar />
       <GridContainer />
     </Stack>

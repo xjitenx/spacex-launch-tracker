@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Stack } from '@mui/material';
+import { Launch, Launches } from '../Types/Lunches';
 import GridFilters from './GridFilters';
 import Grid from './Grid';
-import { Launches } from '../Types/Lunches';
-import { PeriodFilter, StatusFilter, StatusFilters } from '../Types/Filters';
-
-const statusFilters: StatusFilters = [
-  'All',
-  'Upcoming',
-  'Successful',
-  'Failed',
-];
 
 const GridContainer: React.FC = () => {
   const [launches, setLaunches] = useState<Launches>([]);
 
-  const [periodFilter, setPeriodFilter] = useState<PeriodFilter>('');
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('All');
+  const [filteredLaunches, setFilteredLaunches] = useState<Launches>([]);
+
+  const [periodFilter, setPeriodFilter] = useState('All');
+  const [statusFilter, setStatusFilter] = useState('All');
 
   const getLaunches = async () => {
     const res = await fetch('https://api.spacexdata.com/v3/launches');
@@ -28,10 +22,29 @@ const GridContainer: React.FC = () => {
     getLaunches().then((launches: Launches) => setLaunches(launches));
   }, []);
 
+  useEffect(() => {
+    let filteredLaunches_Temp: Launches = [];
+    if (periodFilter === 'All' && statusFilter === 'All') {
+      filteredLaunches_Temp = launches;
+    } else {
+      filteredLaunches_Temp = launches.filter((launch: Launch) => launch.flight_number < 50);
+    }
+    setFilteredLaunches(filteredLaunches_Temp);
+  }, [launches, periodFilter, statusFilter]);
+
   return (
-    <Stack>
-      <GridFilters />
-      <Grid launches={launches} />
+    <Stack
+      direction='column'
+      justifyContent='center'
+      alignItems='center'
+      height='100%'
+      width='70%'
+    >
+      <GridFilters
+        setPeriodFilter={setPeriodFilter}
+        setStatusFilter={setStatusFilter}
+      />
+      <Grid rows={filteredLaunches} />
     </Stack>
   );
 };

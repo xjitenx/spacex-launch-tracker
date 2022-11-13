@@ -1,18 +1,20 @@
-type Rocket = {
-  rocket_id: String;
-  rocket_name: String;
-  rocket_type: String;
-};
-
 type Payload = {
   payload_id: String;
   nationality: String;
   manufacturer: String;
   payload_type: String;
+  orbit: String;
 };
 
 type SecondStage = {
   payloads: Array<Payload>;
+};
+
+type Rocket = {
+  rocket_id: String;
+  rocket_name: String;
+  rocket_type: String;
+  second_stage: SecondStage;
 };
 
 type LaunchSite = {
@@ -26,7 +28,6 @@ export type Launch = {
   mission_name: String;
   launch_date_utc: Date;
   rocket: Rocket;
-  second_stage: SecondStage;
   launch_site: LaunchSite;
   launch_success: Boolean;
   details: String;
