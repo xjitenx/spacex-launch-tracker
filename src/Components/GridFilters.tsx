@@ -86,11 +86,11 @@ const GridFilters: React.FC<GridFilterProps> = ({
             IconComponent={KeyboardArrowDownIcon}
             sx={{ fontWeight: 500 }}
           >
-            <MenuItem value='6UM'>Upcoming 6 Months</MenuItem>
-            <MenuItem value='6UY'>Upcoming 1 Year</MenuItem>
+            <MenuItem value='5UY'>Upcoming 5 Years</MenuItem>
+            <MenuItem value='3UY'>Upcoming 3 Year</MenuItem>
             <MenuItem value='All'>All</MenuItem>
-            <MenuItem value='6PM'>Past 6 Months</MenuItem>
-            <MenuItem value='6PY'>Past 1 Year</MenuItem>
+            <MenuItem value='3PY'>Past 3 Year</MenuItem>
+            <MenuItem value='5PY'>Past 5 Years</MenuItem>
           </Select>
         </FormControl>
       </Stack>
