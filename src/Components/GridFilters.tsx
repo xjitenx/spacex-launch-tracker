@@ -71,8 +71,8 @@ const GridFilters: React.FC<GridFilterProps> = ({
       alignItems='center'
       justifyContent='space-between'
       width='100%'
-      marginTop='50px'
-      marginBottom='50px'
+      marginTop='35px'
+      marginBottom='40px'
     >
       <Stack direction='row' alignItems='center'>
         <CalendarTodayOutlinedIcon
