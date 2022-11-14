@@ -51,19 +51,18 @@ const GridContainer: React.FC = () => {
   }, [launches, periodFilter, statusFilter]);
 
   return (
-    <Stack
-      direction='column'
-      alignItems='center'
-      height='100%'
-      width='70%'
-    >
+    <Stack direction='column' alignItems='center' height='100%' width='70%'>
       {!loadingLaunches && (
         <GridFilters
           setPeriodFilter={setPeriodFilter}
           setStatusFilter={setStatusFilter}
         />
       )}
-      <LaunchGrid rows={filteredLaunches} loadingLaunches={loadingLaunches} filterApplied={launches.length !== filteredLaunches.length} />
+      <LaunchGrid
+        rows={filteredLaunches}
+        loadingLaunches={loadingLaunches}
+        filterApplied={launches.length !== filteredLaunches.length}
+      />
     </Stack>
   );
 };
