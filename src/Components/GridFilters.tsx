@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack } from '@mui/system';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
@@ -9,6 +9,7 @@ import {
   MenuItem,
   SelectChangeEvent,
 } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 
 type GridFilterProps = {
   setPeriodFilter: Function;
@@ -19,15 +20,47 @@ const GridFilters: React.FC<GridFilterProps> = ({
   setPeriodFilter: setParentPeriodFilter,
   setStatusFilter: setParentStatusFilter,
 }) => {
-  const [periodFilter, setPeriodFilter] = useState('All');
-  const [statusFilter, setStatusFilter] = useState('All');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [periodFilter, setPeriodFilter] = useState<any>('All');
+  const [statusFilter, setStatusFilter] = useState<any>('All');
+
+  useEffect(() => {
+    if (searchParams.has('periodFilter')) {
+      setPeriodFilter(searchParams.get('periodFilter'));
+      setParentPeriodFilter(searchParams.get('periodFilter'));
+    }
+    if (searchParams.has('statusFilter')) {
+      setStatusFilter(searchParams.get('statusFilter'));
+      setParentStatusFilter(searchParams.get('statusFilter'));
+    }
+  }, []);
+
+  const setParamsEvent = (key: string, value: string) => {
+    setSearchParams((): any => {
+      const otherKey = key === 'statusFilter' ? 'periodFilter' : 'statusFilter';
+      if (searchParams.has(otherKey)) {
+        if (value === 'All') {
+          return { [otherKey]: searchParams.get(otherKey) };
+        }
+        return { [otherKey]: searchParams.get(otherKey), [key]: value };
+      } else {
+        if (value === 'All') {
+          return {};
+        }
+        return { [key]: value };
+      }
+    });
+  };
 
   const handlePeriodFilterChange = (event: SelectChangeEvent) => {
+    setParamsEvent('periodFilter', event.target.value);
     setPeriodFilter(event.target.value);
     setParentPeriodFilter(event.target.value);
   };
 
   const handleStatusFilterChange = (event: SelectChangeEvent) => {
+    setParamsEvent('statusFilter', event.target.value);
     setStatusFilter(event.target.value);
     setParentStatusFilter(event.target.value);
   };
@@ -53,11 +86,11 @@ const GridFilters: React.FC<GridFilterProps> = ({
             IconComponent={KeyboardArrowDownIcon}
             sx={{ fontWeight: 500 }}
           >
+            <MenuItem value='6UM'>Upcoming 6 Months</MenuItem>
+            <MenuItem value='6UY'>Upcoming 1 Year</MenuItem>
             <MenuItem value='All'>All</MenuItem>
-            <MenuItem value='6Month'>Past 6 Month</MenuItem>
-            <MenuItem value='1Year'>Past 1 Year</MenuItem>
-            <MenuItem value='3Year'>Past 3 Year</MenuItem>
-            <MenuItem value='5Year'>Past 5 Year</MenuItem>
+            <MenuItem value='6PM'>Past 6 Months</MenuItem>
+            <MenuItem value='6PY'>Past 1 Year</MenuItem>
           </Select>
         </FormControl>
       </Stack>

@@ -17,7 +17,6 @@ import youtubeIcon from '../Assets/Icons/youtubeIcon.png';
 import wikipediaIcon from '../Assets/Icons/wikipediaIcon.png';
 import nasaIcon from '../Assets/Icons/nasaIcon.png';
 import { LAUNCH_STATUS_CHIP_COLORS } from '../Lib/Constants';
-import { getLaunchStatusValue } from '../Lib/Functions';
 import LaunchDetailsList from './LaunchDetailsList';
 
 type LaunchDialogProps = {
@@ -31,9 +30,9 @@ export const LaunchDialog: React.FC<LaunchDialogProps> = ({
   closeEvent,
   launch,
 }) => {
-  const value = getLaunchStatusValue(launch || {});
+  const value = launch?.launch_status;
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onClose={() => closeEvent(false)}>
       <DialogTitle>
         <Stack direction='row'>
           <img
@@ -53,8 +52,8 @@ export const LaunchDialog: React.FC<LaunchDialogProps> = ({
                 size='small'
                 sx={{
                   backgroundColor:
-                    LAUNCH_STATUS_CHIP_COLORS[value].backgroundColor,
-                  color: LAUNCH_STATUS_CHIP_COLORS[value].textColor,
+                    LAUNCH_STATUS_CHIP_COLORS[value]?.backgroundColor,
+                  color: LAUNCH_STATUS_CHIP_COLORS[value]?.textColor,
                   fontWeight: '500',
                   paddingLeft: '5px',
                   paddingRight: '5px',

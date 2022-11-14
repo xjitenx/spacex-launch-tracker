@@ -1,3 +1,5 @@
+import { LaunchStatus } from './Types';
+
 type Payload = {
   payload_id: String;
   nationality: String;
@@ -38,6 +40,7 @@ export type Launch = {
   launch_success: Boolean;
   details: String;
   links: Links;
+  launch_status: LaunchStatus;
 };
 
 export type Launches = Array<Launch>;

@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { Stack } from '@mui/material';
 import { Launch, Launches } from '../Types/Lunches';
+import {
+  filterLaunchesByPeriod,
+  filterLaunchesByStatus,
+} from '../Lib/Functions';
+import { getLaunches } from '../HttpClient/LaunchesHttpClient';
 import GridFilters from './GridFilters';
 import LaunchGrid from './LaunchGrid';
 
 const GridContainer: React.FC = () => {
   const [launches, setLaunches] = useState<Launches>([]);
+  const [loadingLaunches, setLoadingLaunches] = useState<boolean>(false);
 
   const [filteredLaunches, setFilteredLaunches] = useState<Launches>([]);
 
   const [periodFilter, setPeriodFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
 
-  const getLaunches = async () => {
-    const res = await fetch('https://api.spacexdata.com/v3/launches');
-    const data: Launches = await res.json();
-    return data;
-  };
-
   useEffect(() => {
-    getLaunches().then((launches: Launches) => setLaunches(launches));
+    setLoadingLaunches(true);
+    getLaunches()
+      .then((launches: Launches) => {
+        setLoadingLaunches(false);
+        setLaunches(launches);
+      })
+      .catch(() => setLoadingLaunches(false));
   }, []);
 
   useEffect(() => {
@@ -27,7 +33,19 @@ const GridContainer: React.FC = () => {
     if (periodFilter === 'All' && statusFilter === 'All') {
       filteredLaunches_Temp = launches;
     } else {
-      filteredLaunches_Temp = launches.filter((launch: Launch) => launch.flight_number < 50);
+      filteredLaunches_Temp = launches.filter((launch: Launch) => {
+        if (periodFilter !== 'All' && statusFilter !== 'All') {
+          return (
+            filterLaunchesByStatus(launch, statusFilter) &&
+            filterLaunchesByPeriod(launch, periodFilter)
+          );
+        } else if (periodFilter !== 'All') {
+          return filterLaunchesByPeriod(launch, periodFilter);
+        } else if (statusFilter !== 'All') {
+          return filterLaunchesByStatus(launch, statusFilter);
+        }
+        return true;
+      });
     }
     setFilteredLaunches(filteredLaunches_Temp);
   }, [launches, periodFilter, statusFilter]);
@@ -35,16 +53,17 @@ const GridContainer: React.FC = () => {
   return (
     <Stack
       direction='column'
-      justifyContent='center'
       alignItems='center'
       height='100%'
       width='70%'
     >
-      <GridFilters
-        setPeriodFilter={setPeriodFilter}
-        setStatusFilter={setStatusFilter}
-      />
-      <LaunchGrid rows={filteredLaunches} />
+      {!loadingLaunches && (
+        <GridFilters
+          setPeriodFilter={setPeriodFilter}
+          setStatusFilter={setStatusFilter}
+        />
+      )}
+      <LaunchGrid rows={filteredLaunches} loadingLaunches={loadingLaunches} />
     </Stack>
   );
 };

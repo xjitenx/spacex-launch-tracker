@@ -7,9 +7,10 @@ import { LaunchDialog } from './LaunchDialog';
 
 type LaunchGridProps = {
   rows: Launches;
+  loadingLaunches: boolean;
 };
 
-const LaunchGrid: React.FC<LaunchGridProps> = ({ rows }) => {
+const LaunchGrid: React.FC<LaunchGridProps> = ({ rows, loadingLaunches }) => {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [currentLaunch, setCurrentLaunch] = useState<Launch>(rows[0]);
 
@@ -19,20 +20,25 @@ const LaunchGrid: React.FC<LaunchGridProps> = ({ rows }) => {
   };
 
   return (
-    <Box height='100%' width='100%'>
+    <Box width='100%'>
       <DataGrid
         rows={rows}
         columns={columnDefs}
         pageSize={12}
+        autoHeight
         getRowId={(row) => row.flight_number}
         onRowClick={rowClickedEvent}
         disableSelectionOnClick
+        loading={loadingLaunches}
         sx={{
           '& > .MuiDataGrid-columnSeparator': {
             visibility: 'hidden',
           },
           '& .MuiDataGrid-columnHeaders': {
             backgroundColor: 'rgba(224, 224, 224, 0.368)',
+          },
+          '& .MuiDataGrid-cell': {
+            border: 'none',
           },
         }}
         components={{
@@ -48,7 +54,11 @@ const LaunchGrid: React.FC<LaunchGridProps> = ({ rows }) => {
           ),
         }}
       />
-      <LaunchDialog launch={currentLaunch} open={dialogOpen} closeEvent={setDialogOpen} />
+      <LaunchDialog
+        launch={currentLaunch}
+        open={dialogOpen}
+        closeEvent={setDialogOpen}
+      />
     </Box>
   );
 };

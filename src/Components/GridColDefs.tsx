@@ -3,10 +3,11 @@ import {
   GridColDef,
   GridValueGetterParams,
   GridRenderCellParams,
+  GridValueFormatterParams,
 } from '@mui/x-data-grid';
 import { LaunchStatus } from '../Types/Types';
 import { LAUNCH_STATUS_CHIP_COLORS } from '../Lib/Constants';
-import { getLaunchStatusValue } from '../Lib/Functions';
+import { getDateTimeFormatted } from '../Lib/Functions';
 
 const columnDefs: GridColDef[] = [
   {
@@ -20,6 +21,9 @@ const columnDefs: GridColDef[] = [
     headerName: 'Launched (UTC)',
     flex: 2,
     headerClassName: 'lastcolumnSeparator',
+    valueFormatter(params: GridValueFormatterParams) {
+      return getDateTimeFormatted(params.value);
+    },
   },
   {
     field: 'location',
@@ -45,15 +49,13 @@ const columnDefs: GridColDef[] = [
       params.row?.rocket?.second_stage?.payloads[0].orbit,
   },
   {
-    field: 'launch_success',
+    field: 'launch_status',
     headerName: 'Launch Status',
     width: 150,
     align: 'center',
     headerAlign: 'center',
     hideSortIcons: true,
     headerClassName: 'lastcolumnSeparator',
-    valueGetter: (params: GridValueGetterParams) =>
-      getLaunchStatusValue(params.row),
     renderCell: (params: GridRenderCellParams) => {
       const value: LaunchStatus = params.value;
       return (
