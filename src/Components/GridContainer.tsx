@@ -63,7 +63,7 @@ const GridContainer: React.FC = () => {
           setStatusFilter={setStatusFilter}
         />
       )}
-      <LaunchGrid rows={filteredLaunches} loadingLaunches={loadingLaunches} />
+      <LaunchGrid rows={filteredLaunches} loadingLaunches={loadingLaunches} filterApplied={launches.length !== filteredLaunches.length} />
     </Stack>
   );
 };
