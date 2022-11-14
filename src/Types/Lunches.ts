@@ -29,7 +29,7 @@ type Links = {
   article_link: string;
   wikipedia: string;
   video_link: string;
-}
+};
 
 export type Launch = {
   flight_number: Number;
