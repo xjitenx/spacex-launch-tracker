@@ -8,9 +8,10 @@ import { LaunchDialog } from './LaunchDialog';
 type LaunchGridProps = {
   rows: Launches;
   loadingLaunches: boolean;
+  filterApplied: boolean;
 };
 
-const LaunchGrid: React.FC<LaunchGridProps> = ({ rows, loadingLaunches }) => {
+const LaunchGrid: React.FC<LaunchGridProps> = ({ rows, loadingLaunches, filterApplied }) => {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [currentLaunch, setCurrentLaunch] = useState<Launch>(rows[0]);
 
@@ -44,7 +45,7 @@ const LaunchGrid: React.FC<LaunchGridProps> = ({ rows, loadingLaunches }) => {
         components={{
           NoRowsOverlay: () => (
             <Stack height='100%' alignItems='center' sx={{ marginTop: '60px' }}>
-              No rows in DataGrid
+              {filterApplied ? 'No results found for the specified filter' : 'No rows in DataGrid'}
             </Stack>
           ),
           NoResultsOverlay: () => (
