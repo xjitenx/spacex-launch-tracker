@@ -1,3 +1,4 @@
+export const CURRENT_DATE = '2010-01-01';
 export const DATE_TIME_FORMAT = 'DD MMMM YYYY hh:mm';
 
 export const LAUNCH_STATUS_CHIP_COLORS = {
