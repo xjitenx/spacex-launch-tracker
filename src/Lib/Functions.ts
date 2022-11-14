@@ -1,8 +1,6 @@
 import moment from 'moment';
 import { Launch } from '../Types/Lunches';
-import { DATE_TIME_FORMAT } from './Constants';
-
-const CURRENT_DATE = '2010-01-01';
+import { CURRENT_DATE, DATE_TIME_FORMAT } from './Constants';
 
 export const filterLaunchesByPeriod = (launch: Launch, period: string) => {
   const noOfYears = Number(period[0]);
